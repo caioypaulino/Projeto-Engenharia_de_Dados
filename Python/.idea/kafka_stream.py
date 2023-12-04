@@ -17,11 +17,20 @@ def get_data():
     return response
 
 def format_data(response):
+    location = response['location']
+
     data = {}
     data['first_name'] = response['name']['first']
     data['last_name'] = response['name']['last']
     data['gender'] = response['gender']
-    data['address'] = f"{str(location['street']['number'])} {location['street']['name']} {location['city']}, {location['state']}, {location['country']}f"
+    data['address'] = f"{str(location['street']['number'])} {location['street']['name']} {location['city']}, {location['state']}, {location['country']}"
+    data['postcode'] = location['postcode']
+    data['email'] = response['email']
+    data['username'] = response['login']['username']
+    data['dob'] = response['dob']['date']
+    data['registered_date'] = response['registered']['date']
+    data['phone'] = response['phone']
+    data['picture'] = response['picture']['medium']
 
     return data
 
