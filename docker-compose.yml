@@ -178,18 +178,6 @@ services:
       SPARK_MASTER_URL: spark://spark-master:7077
     networks:
       - confluent
-  spark-worker-2:
-    image: bitnami/spark:latest
-    command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
-    depends_on:
-      - spark-master
-    environment:
-      SPARK_MODE: worker
-      SPARK_WORKER_CORES: 2
-      SPARK_WORKER_MEMORY: 1g
-      SPARK_MASTER_URL: spark://spark-master:7077
-    networks:
-      - confluent
 
   cassandra_db:
     image: cassandra:latest
