@@ -64,23 +64,23 @@ def insert_data(session, **kwargs):
 
 
 def create_spark_connection():
-    s_conn = None
+    spark_conn = None
 
     try:
-        s_conn = SparkSession.builder \
+        spark_conn = SparkSession.builder \
             .appName('SparkDataStreaming') \
             .config('spark.jars.packages', "com.datastax.spark:spark-cassandra-connector_2.13:3.4.1,"
                                            "org.apache.spark:spark-sql-kafka-0-10_2.13:3.4.1") \
             .config('spark.cassandra.connection.host', 'localhost') \
             .getOrCreate()
 
-        s_conn.sparkContext.setLogLevel("ERROR")
+        spark_conn.sparkContext.setLogLevel("ERROR")
         logging.info("Spark connection criada com sucesso!")
 
     except Exception as ex:
         logging.error(f"Não foi possível criar a spark session por conta da exception {ex}")
 
-    return s_conn
+    return spark_conn
 
 
 def connect_to_kafka(spark_conn):
