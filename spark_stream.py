@@ -28,8 +28,8 @@ def create_table(session):
             username TEXT,
             registered_date TEXT,
             phone TEXT,
-            picture TEXT;
-    """)
+            picture TEXT);
+        """)
 
     print("Tabela criada com sucesso!")
 
@@ -134,7 +134,7 @@ def create_selection_df_from_kafka(spark_df):
     ])
 
     select = spark_df.selectExpr("CAST(value AS STRING)") \
-        .select(from_json(col('value', schema).alias('data')).select("data.*"))
+        .select(from_json(col('value'), schema).alias('data')).select("data.*")
     print(select)
 
     return select

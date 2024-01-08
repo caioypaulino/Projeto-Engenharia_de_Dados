@@ -97,11 +97,16 @@ services:
       PORT: 9021
     networks:
       - confluent
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9021/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   webserver:
     image: apache/airflow:2.6.0-python3.9
     command: webserver
-    entrypoint: [ '/opt/airflow/script/entrypoint.sh' ]
+    entrypoint: ['/opt/airflow/script/entrypoint.sh']
     depends_on:
       - postgres
     environment:
@@ -120,7 +125,7 @@ services:
     ports:
       - "8080:8080"
     healthcheck:
-      test: [ 'CMD-SHELL', "[ -f /opt/airflow/airflow-webserver.pid ]" ]
+      test: ['CMD-SHELL', "[ -f /opt/airflow/airflow-webserver.pid ]"]
       interval: 30s
       timeout: 30s
       retries: 3
@@ -192,6 +197,5 @@ services:
       - CASSANDRA_PASSWORD=cassandra
     networks:
       - confluent
-
 networks:
   confluent:
